@@ -16,3 +16,6 @@ Content-Type: application/json
     "name": "",
     "description": "This task has no name."
 }
+
+###Get All Tasks
+GET http://localhost:8080/tasks

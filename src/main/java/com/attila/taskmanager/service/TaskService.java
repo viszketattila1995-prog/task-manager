@@ -2,12 +2,15 @@ package com.attila.taskmanager.service;
 
 import com.attila.taskmanager.domain.Task;
 import com.attila.taskmanager.dto.request.CreateTaskCommand;
+import com.attila.taskmanager.dto.response.TaskListItem;
 import com.attila.taskmanager.exception.TaskAlreadyExistsException;
 import com.attila.taskmanager.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,5 +30,13 @@ public class TaskService {
         task.setDescription(createTaskCommand.getDescription());
         taskRepository.save(task);
 
+    }
+
+    public List<TaskListItem> getAllTask() {
+
+        return taskRepository.findAll()
+                .stream()
+                .map(task -> new TaskListItem(task.getId(), task.getName(), task.getDescription(), task.isCompleted()))
+                .toList();
     }
 }
