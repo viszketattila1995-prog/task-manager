@@ -1,0 +1,28 @@
+package com.attila.taskmanager.exception;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(TaskAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleTaskAlreadyExistsException(TaskAlreadyExistsException ex) {
+        log.error("Task already exists: {}", ex.getMessage());
+        return new ApiError("TASK_ALREADY_EXISTS", ex.getMessage(), "A task with the same name already exists.");
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationError> methodArgumentNotValid(MethodArgumentNotValidException ex) {
+        ValidationError validationError = new ValidationError();
+        ex.getBindingResult().getFieldErrors().forEach(error -> validationError.addFieldError(error.getField(), error.getDefaultMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
+    }
+}
