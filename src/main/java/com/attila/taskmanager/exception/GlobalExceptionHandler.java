@@ -25,4 +25,11 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getFieldErrors().forEach(error -> validationError.addFieldError(error.getField(), error.getDefaultMessage()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
     }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleTaskNotFoundException(TaskNotFoundException ex) {
+        log.error("Task not found: {}", ex.getMessage());
+        return new ApiError("TASK_NOT_FOUND", ex.getMessage(), "Task with this id doesn't exists");
+    }
 }

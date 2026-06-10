@@ -19,3 +19,23 @@ Content-Type: application/json
 
 ###Get All Tasks
 GET http://localhost:8080/tasks
+
+###Get task by id 1
+GET http://localhost:8080/tasks/1
+
+###Get task which doesn't exists
+GET http://localhost:8080/tasks/100
+
+###Update task
+PUT http://localhost:8080/tasks/1
+Content-Type: application/json
+
+{
+    "name": "Tasker",
+    "description": "Changed Task.",
+    "completed": true
+
+}
+
+###Delete Task
+DELETE http://localhost:8080/tasks/1
