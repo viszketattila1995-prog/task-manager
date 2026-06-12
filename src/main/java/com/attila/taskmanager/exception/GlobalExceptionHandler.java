@@ -32,4 +32,11 @@ public class GlobalExceptionHandler {
         log.error("Task not found: {}", ex.getMessage());
         return new ApiError("TASK_NOT_FOUND", ex.getMessage(), "Task with this id doesn't exists");
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        log.error("User already exists whit this username: {}", ex.getMessage());
+        return new ApiError("USER_ALREADY_EXISTS", ex.getMessage(), "User with this username is already exists");
+    }
 }
