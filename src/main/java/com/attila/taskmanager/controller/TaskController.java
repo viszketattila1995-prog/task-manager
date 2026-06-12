@@ -8,7 +8,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,15 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Void> createTask(@Valid @RequestBody CreateTaskCommand createTaskCommand) {
-        taskService.createNewTask(createTaskCommand);
-        return ResponseEntity.ok().build();
+        Long entityId = taskService.createNewTask(createTaskCommand);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(entityId)
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping
@@ -36,16 +45,16 @@ public class TaskController {
         return ResponseEntity.ok(item);
     }
 
-    @PutMapping("/{id:\\d+}")
-    public ResponseEntity<Void> updateTask(@PathVariable Long id, @RequestBody UpdateTaskCommand updateTaskCommand) {
+    @PatchMapping("/{id:\\d+}")
+    public ResponseEntity<Void> updateTask(@PathVariable Long id, @Valid @RequestBody UpdateTaskCommand updateTaskCommand) {
         taskService.updateTask(id, updateTaskCommand);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("{id:\\d+}")
+    @DeleteMapping("/{id:\\d+}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }

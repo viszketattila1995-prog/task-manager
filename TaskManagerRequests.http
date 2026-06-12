@@ -38,4 +38,8 @@ Content-Type: application/json
 }
 
 ###Delete Task
-DELETE http://localhost:8080/tasks/1
+DELETE http://localhost:8080/tasks/2
+
+###Get basic user
+GET http://localhost:8080/tasks
+Authorization: Basic user 0114682d-ed3e-49ba-93dd-579c1f129651

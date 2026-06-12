@@ -7,10 +7,10 @@ import com.attila.taskmanager.dto.response.TaskListItem;
 import com.attila.taskmanager.exception.TaskAlreadyExistsException;
 import com.attila.taskmanager.exception.TaskNotFoundException;
 import com.attila.taskmanager.repository.TaskRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public void createNewTask(CreateTaskCommand createTaskCommand) {
+    public Long createNewTask(CreateTaskCommand createTaskCommand) {
         if (taskRepository.existsByName(createTaskCommand.getName())) {
             log.error("Task already exists");
             throw new TaskAlreadyExistsException("Task already exists");
@@ -30,10 +30,10 @@ public class TaskService {
         Task task = new Task();
         task.setName(createTaskCommand.getName());
         task.setDescription(createTaskCommand.getDescription());
-        taskRepository.save(task);
-
+        return taskRepository.save(task).getId();
     }
 
+    @Transactional(readOnly = true)
     public List<TaskListItem> getAllTask() {
 
         return taskRepository.findAll()
@@ -42,6 +42,7 @@ public class TaskService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public TaskListItem getItemById(Long id) {
 
         Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
@@ -52,9 +53,15 @@ public class TaskService {
 
         Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("Task not found with id: " + id));
 
-        task.setName(updateTaskCommand.getName());
-        task.setDescription(updateTaskCommand.getDescription());
-        task.setCompleted(updateTaskCommand.isCompleted());
+        if (updateTaskCommand.getName() != null) {
+            task.setName(updateTaskCommand.getName());
+        }
+        if (updateTaskCommand.getDescription() != null) {
+            task.setDescription(updateTaskCommand.getDescription());
+        }
+        if (updateTaskCommand.getCompleted() != null) {
+            task.setCompleted(updateTaskCommand.getCompleted());
+        }
 
         taskRepository.save(task);
     }
