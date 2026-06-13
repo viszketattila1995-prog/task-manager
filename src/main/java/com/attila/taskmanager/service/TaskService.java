@@ -24,12 +24,12 @@ public class TaskService {
 
     public Long createNewTask(CreateTaskCommand createTaskCommand) {
         if (taskRepository.existsByName(createTaskCommand.getName())) {
-            log.error("Task already exists");
             throw new TaskAlreadyExistsException("Task already exists");
         }
         Task task = new Task();
         task.setName(createTaskCommand.getName());
         task.setDescription(createTaskCommand.getDescription());
+        log.info("New task created");
         return taskRepository.save(task).getId();
     }
 
