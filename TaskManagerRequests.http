@@ -40,15 +40,97 @@ Content-Type: application/json
 ###Delete Task
 DELETE http://localhost:8080/tasks/2
 
-###Get basic user
+###Get basic appUser
 GET http://localhost:8080/tasks
-Authorization: Basic user 0114682d-ed3e-49ba-93dd-579c1f129651
+Authorization: Basic appUser 0114682d-ed3e-49ba-93dd-579c1f129651
 
 ###User Registration
-POST http://localhost:8080/user
+POST http://localhost:8080/appUser
 Content-Type: application/json
 
 {
   "username": "atis",
   "password": "titok123"
 }
+
+###User Registration2
+POST http://localhost:8080/appUser
+Content-Type: application/json
+
+{
+"username": "tesztuser",
+"password": "titok123"
+}
+
+###Get the User
+GET http://localhost:8080/tasks
+Authorization: Basic atis titok123
+
+###Get a non exists user
+GET http://localhost:8080/tasks
+Authorization: Basic nemletezik titok123
+
+###Logged in user create a task
+POST http://localhost:8080/tasks
+Authorization: Basic atis titok123
+Content-Type: application/json
+
+{
+  "name": "Első task",
+  "description": "Ez az első taskm"
+}
+
+###Get the Task with loggedin user
+GET http://localhost:8080/tasks
+Authorization: Basic atis titok123
+
+### Második user regisztrálása
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "username": "masikuser",
+  "password": "titok123"
+}
+
+### Task létrehozása a második usernek
+POST http://localhost:8080/tasks
+Authorization: Basic masikuser titok123
+Content-Type: application/json
+
+{
+  "name": "Masodik user taskja",
+  "description": "Ez nem az atis taskja"
+}
+
+### Atis tasklistája
+GET http://localhost:8080/tasks
+Authorization: Basic atis titok123
+
+### Masikuser tasklistája
+GET http://localhost:8080/tasks
+Authorization: Basic masikuser titok123
+
+### Atis megpróbálja lekérni masikuser taskját (pl. id = 2)
+GET http://localhost:8080/tasks/4
+Authorization: Basic atis titok123
+
+### Atis megpróbálja törölni masikuser taskját
+DELETE http://localhost:8080/tasks/4
+Authorization: Basic atis titok123
+
+###JWT flow tesztelése token kérés
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "atis",
+  "password": "titok123"
+}
+
+###Kapott JWT token tesztelése
+GET http://localhost:8080/tasks
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhdGlzIiwiaWF0IjoxNzgxNTQ2NjI2LCJleHAiOjE3ODE2MzMwMjZ9.WT8GvN0Y9q_7q0qbVCgU5STkqL-dmTryPOzw6uElkjS4eoftUIHgiL8qbgNU1BNo657fd9b12UB8u6UQ-I9Z2A
+
+###Kérés küldése token nélkül
+GET http://localhost:8080/tasks

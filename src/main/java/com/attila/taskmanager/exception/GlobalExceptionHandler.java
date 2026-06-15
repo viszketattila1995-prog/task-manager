@@ -37,6 +37,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleUserAlreadyExists(UserAlreadyExistsException ex) {
         log.error("User already exists whit this username: {}", ex.getMessage());
-        return new ApiError("USER_ALREADY_EXISTS", ex.getMessage(), "User with this username is already exists");
+        return new ApiError("USER_ALREADY_EXISTS", ex.getMessage(), "User with this username already exists");
+    }
+
+    @ExceptionHandler(WrongPasswordException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiError handleWrongPasswordException(WrongPasswordException ex) {
+        log.error("Wrong password: {}", ex.getMessage());
+        return new ApiError("INVALID_CREDENTIALS", ex.getMessage(), "Invalid credentials");
     }
 }
