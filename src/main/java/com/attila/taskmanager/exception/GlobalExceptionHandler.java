@@ -22,15 +22,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TaskAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleTaskAlreadyExistsException(TaskAlreadyExistsException ex) {
-        log.error("Task already exists: {}", ex.getMessage());
+        log.error("TaskService already exists: {}", ex.getMessage());
         return new ApiError("TASK_ALREADY_EXISTS", ex.getMessage(), "A task with the same name already exists.");
     }
 
     @ExceptionHandler(TaskNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleTaskNotFoundException(TaskNotFoundException ex) {
-        log.error("Task not found: {}", ex.getMessage());
-        return new ApiError("TASK_NOT_FOUND", ex.getMessage(), "Task with this id doesn't exists");
+        log.error("TaskService not found: {}", ex.getMessage());
+        return new ApiError("TASK_NOT_FOUND", ex.getMessage(), "TaskService with this id doesn't exists");
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)

@@ -29,7 +29,7 @@ public class TaskService {
 
     public Long createNewTask(CreateTaskCommand createTaskCommand, String username) {
         if (taskRepository.existsByName(createTaskCommand.getName())) {
-            throw new TaskAlreadyExistsException("Task already exists");
+            throw new TaskAlreadyExistsException("TaskService already exists");
         }
 
         AppUser appUser = userRepository.findByUsername(username)
@@ -59,20 +59,20 @@ public class TaskService {
     @Transactional(readOnly = true)
     public TaskListItem getItemById(Long id, String username) {
 
-        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("TaskService not found with id: " + id));
 
         if (!task.getAppUser().getUsername().equals(username)) {
-            throw new TaskNotFoundException("Task not found with id: " + id);
+            throw new TaskNotFoundException("TaskService not found with id: " + id);
         }
         return new TaskListItem(task.getId(), task.getName(), task.getDescription(), task.isCompleted());
     }
 
     public void updateTask(Long id, UpdateTaskCommand updateTaskCommand, String username) {
 
-        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("Task not found with id: " + id));
+        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("TaskService not found with id: " + id));
 
         if (!task.getAppUser().getUsername().equals(username)) {
-            throw new TaskNotFoundException("Task not found with id: " + id);
+            throw new TaskNotFoundException("TaskService not found with id: " + id);
         }
 
         if (updateTaskCommand.getName() != null) {
@@ -90,10 +90,10 @@ public class TaskService {
 
     public void deleteTask(Long id, String username) {
 
-        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("Task not found with id: " + id));
+        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("TaskService not found with id: " + id));
 
         if (!task.getAppUser().getUsername().equals(username)) {
-            throw new TaskNotFoundException("Task not found with id: " + id);
+            throw new TaskNotFoundException("TaskService not found with id: " + id);
         }
 
         taskRepository.delete(task);

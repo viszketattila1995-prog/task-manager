@@ -4,7 +4,7 @@ POST http://localhost:8080/tasks
 Content-Type: application/json
 
 {
-    "name": "New Task",
+    "name": "New TaskService",
     "description": "This is a new task."
 }
 
@@ -32,12 +32,12 @@ Content-Type: application/json
 
 {
     "name": "Tasker",
-    "description": "Changed Task.",
+    "description": "Changed TaskService.",
     "completed": true
 
 }
 
-###Delete Task
+###Delete TaskService
 DELETE http://localhost:8080/tasks/2
 
 ###Get basic appUser
@@ -80,7 +80,7 @@ Content-Type: application/json
   "description": "Ez az első taskm"
 }
 
-###Get the Task with loggedin user
+###Get the TaskService with loggedin user
 GET http://localhost:8080/tasks
 Authorization: Basic atis titok123
 
@@ -93,7 +93,7 @@ Content-Type: application/json
   "password": "titok123"
 }
 
-### Task létrehozása a második usernek
+### TaskService létrehozása a második usernek
 POST http://localhost:8080/tasks
 Authorization: Basic masikuser titok123
 Content-Type: application/json
