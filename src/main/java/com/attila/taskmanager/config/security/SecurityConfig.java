@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint((request, response, authException) ->
                                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED)));
 //                 Ez csak basic auth-hoz kell
-//                .httpBasic(Customizer.withDefaults());1
+//                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
