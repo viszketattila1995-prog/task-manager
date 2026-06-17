@@ -25,4 +25,8 @@ export class AuthService {
     localStorage.removeItem('token')
   }
 
+  isJwtTokenPresent() {
+    return !!localStorage.getItem('token')
+  }
+
 }

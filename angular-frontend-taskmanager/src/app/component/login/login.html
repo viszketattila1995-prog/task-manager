@@ -1,17 +1,32 @@
-
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh">
 
   <div class="container mt-3 align-items-center" style="width: 40%">
-    <h2 class="mt-4 fw-bold">Bejelentkezés</h2>
+    <h2 class="mt-4 fw-bold">Login</h2>
 
     <form class="mt-3" [formGroup]="loginForm" (ngSubmit)="login()">
       <div>
-      <label for="username" class="form-label fw-bold">Felhasználónév: </label>
-        <input type="text" class="form-control" formControlName="username">
+        <label for="username" class="form-label fw-bold">Username: </label>
+        <input type="text" class="form-control" formControlName="username"
+               [ngClass]="{'is-invalid': loginForm.get('username')?.invalid && loginForm.get('username')?.touched && !loginForm.get('username')?.errors?.['serverError']}">
+
+        @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched && !loginForm.get('username')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter a username</small>
+        }
+        @if (loginForm.get('username')?.errors?.['serverError']) {
+          <small class="text-danger">{{ loginForm.get('username')?.errors?.['serverError'] }}</small>
+        }
       </div>
       <div class="mt-3">
-        <label for="password" class="form-label fw-bold">Jelszó:</label>
-        <input type="password" class="form-control" formControlName="password">
+        <label for="password" class="form-label fw-bold">Password:</label>
+        <input type="password" class="form-control" formControlName="password"
+               [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched && !loginForm.get('password')?.errors?.['serverError']}">
+
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched && !loginForm.get('password')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter a password</small>
+        }
+        @if (loginForm.get('password')?.errors?.['serverError']) {
+          <small class="text-danger">{{ loginForm.get('password')?.errors?.['serverError'] }}</small>
+        }
       </div>
       <div class="mt-3">
         <button type="submit" class="btn btn-dark" [disabled]="loginForm.invalid">Bejelentkezés</button>
