@@ -1,11 +1,11 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {TaskService} from '../../service/task.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {TaskListItem} from '../../model/task-list-item';
 
 @Component({
   selector: 'app-task-list',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })

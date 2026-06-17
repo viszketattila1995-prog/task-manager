@@ -5,13 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      @if (!isJwtTokenPresent()) {
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active fw-bold" aria-current="page" routerLink="/login">Login</a>
-          </li>
-        </ul>
-      } @else {
+      @if (isJwtTokenPresent()) {
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link active fw-bold" style="cursor: pointer" aria-current="page" (click)="logout()" >Logout</a>

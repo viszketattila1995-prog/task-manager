@@ -1,1 +1,34 @@
-<p>task-list works!</p>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 40vh">
+  <div class="card shadow p-3" style="width: 65%; background-color: antiquewhite">
+    @if (taskList().length > 0) {
+      <table class="table table-hover align-middle" style="--bs-table-bg: transparent">
+        <thead>
+        <tr>
+          <th style="width: 20%">Name</th>
+          <th style="width: 70%">Description</th>
+          <th style="width: 10%">Done</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (task of taskList(); track task.id) {
+            <tr>
+              <td>{{ task.name }}</td>
+              <td>{{ task.description }}</td>
+              <td>{{ task.completed }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="text-center py-5">
+        <h5 class="fw-bold mb-2">You don't have any tasks yet!</h5>
+        <p class="text-muted mb-4">Let's start and create your first task.</p>
+        <a routerLink="/create-task" class="btn btn-dark">+ New task</a>
+      </div>
+    }
+    <div class="d-flex justify-content-end mt-3">
+      <a routerLink="/create-task" class="btn btn-dark">+ New task</a>
+    </div>
+  </div>
+
+</div>
