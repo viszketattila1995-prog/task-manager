@@ -28,12 +28,13 @@ public class TaskService {
     private final UserRepository userRepository;
 
     public Long createNewTask(CreateTaskCommand createTaskCommand, String username) {
-        if (taskRepository.existsByName(createTaskCommand.getName())) {
-            throw new TaskAlreadyExistsException("TaskService already exists");
-        }
 
         AppUser appUser = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+                .orElseThrow(()-> new UsernameNotFoundException("User not found: " + username));
+
+        if (taskRepository.existsByNameAndAppUser(createTaskCommand.getName(), appUser)) {
+            throw new TaskAlreadyExistsException("TaskService already exists");
+        }
 
         Task task = new Task();
         task.setName(createTaskCommand.getName());
@@ -69,7 +70,7 @@ public class TaskService {
 
     public void updateTask(Long id, UpdateTaskCommand updateTaskCommand, String username) {
 
-        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("TaskService not found with id: " + id));
+        Task task = taskRepository.findById(id).orElseThrow(()-> new TaskNotFoundException("Task not found with id: " + id));
 
         if (!task.getAppUser().getUsername().equals(username)) {
             throw new TaskNotFoundException("TaskService not found with id: " + id);

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    boolean existsByName(String name);
+    boolean existsByNameAndAppUser(String name, AppUser appUser);
 
     List<Task> findAllByAppUser(AppUser appUser);
 
