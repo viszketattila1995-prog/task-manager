@@ -65,6 +65,7 @@ public class TaskService {
         if (!task.getAppUser().getUsername().equals(username)) {
             throw new TaskNotFoundException("TaskService not found with id: " + id);
         }
+        log.info("Get task by id: {}", id);
         return new TaskListItem(task.getId(), task.getName(), task.getDescription(), task.isCompleted());
     }
 
@@ -85,6 +86,7 @@ public class TaskService {
         if (updateTaskCommand.getCompleted() != null) {
             task.setCompleted(updateTaskCommand.getCompleted());
         }
+        log.info("Task updated");
 
         taskRepository.save(task);
     }
@@ -96,6 +98,7 @@ public class TaskService {
         if (!task.getAppUser().getUsername().equals(username)) {
             throw new TaskNotFoundException("TaskService not found with id: " + id);
         }
+        log.info("Task deleted: {}", id);
 
         taskRepository.delete(task);
     }
