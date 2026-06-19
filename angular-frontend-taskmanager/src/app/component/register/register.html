@@ -1,1 +1,46 @@
-<p>register works!</p>
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh">
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger mt-3 d-flex justify-content-center align-items-center"
+         style="width: 40%">{{ errorMessage() }}
+    </div>
+  }
+
+  <div class="container mt-3 align-items-center card shadow-lg" style="width: 40%; background: antiquewhite">
+
+    <form class="mt-5" [formGroup]="registerForm" (ngSubmit)="register()">
+      <h2>Create your account</h2>
+      <div class="mt-4">
+        <label for="username" class="form-label fw-bold">Username: </label>
+        <input type="text" class="form-control" formControlName="username"
+               [ngClass]="{'is-invalid': registerForm.get('username')?.invalid && registerForm.get('username')?.touched && !registerForm.get('username')?.errors?.['serverError']}">
+
+        @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched && !registerForm.get('username')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter your username</small>
+        }
+        @if (registerForm.get('username')?.errors?.['serverError']) {
+          <small class="text-danger">{{ registerForm.get('username')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+      <div class="mt-3">
+        <label for="password" class="form-label fw-bold">Password:</label>
+        <input type="password" class="form-control" formControlName="password"
+               [ngClass]="{'is-invalid': registerForm.get('password')?.invalid && registerForm.get('password')?.touched && !registerForm.get('password')?.errors?.['serverError']}">
+
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched && !registerForm.get('password')?.errors?.['serverError']) {
+          <small class="text-danger">Please enter your password</small>
+        }
+        @if (registerForm.get('password')?.errors?.['serverError']) {
+          <small class="text-danger">{{ registerForm.get('password')?.errors?.['serverError'] }}</small>
+        }
+      </div>
+      <div class="mt-3 d-flex justify-content-between">
+        <button type="submit" class="btn btn-dark" [disabled]="registerForm.invalid">Register</button>
+        <button type="button" class="btn btn-dark" routerLink="/login">Back to Login</button>
+      </div>
+      <div class="mt-5">
+      </div>
+
+    </form>
+  </div>
+</div>
