@@ -1,1 +1,11 @@
-<p>task-details works!</p>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 40vh">
+  <div class="card shadow p-3" style="width: 65%; background-color: antiquewhite">
+    <h2 class="mt-3 d-flex justify-content-center align-items-center">{{ taskDetails()?.name }}</h2>
+    <h5 class="mt-5 d-flex justify-content-center align-items-center" style="overflow-wrap: anywhere">{{ taskDetails()?.description }}</h5>
+    <div class="mt-5 d-flex justify-content-between">
+      <button class="btn btn-danger" (click)="deleteTask()">Delete</button>
+      <button class="btn btn-dark" [routerLink]="['/edit-task', taskDetails()?.id]" style="cursor: pointer">Edit Task</button>
+      <button class="btn btn-dark" (click)="completeTask()">Complete</button>
+    </div>
+  </div>
+</div>

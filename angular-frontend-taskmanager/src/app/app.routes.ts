@@ -7,6 +7,7 @@ import {NotFound} from './component/not-found/not-found';
 import {Register} from './component/register/register';
 import {loginGuard} from './guard/login-guard';
 import {authGuard} from './guard/auth-guard';
+import {EditTask} from './component/edit-task/edit-task';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -15,5 +16,6 @@ export const routes: Routes = [
   {path: 'task-details/:id', component: TaskDetails, canActivate: [authGuard]},
   {path: 'task-list', component: TaskList, canActivate: [authGuard]},
   {path: 'register', component: Register, canActivate: [loginGuard]},
+  {path: 'edit-task/:id', component: EditTask, canActivate: [authGuard]},
   {path: '**', component: NotFound}
 ];

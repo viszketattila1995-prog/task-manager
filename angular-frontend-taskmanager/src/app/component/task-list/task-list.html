@@ -14,7 +14,7 @@
               <td>
                 <a [routerLink]="['/task-details', task.id]" style="cursor: pointer">{{ task.name }}</a>
               </td>
-              <td>{{ task.description }}</td>
+              <td class="text-truncate" style="max-width: 0">{{ task.description }}</td>
             </tr>
           }
         </tbody>

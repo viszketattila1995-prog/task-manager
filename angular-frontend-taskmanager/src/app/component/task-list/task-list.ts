@@ -1,6 +1,6 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {TaskService} from '../../service/task.service';
-import {Router, RouterLink} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {TaskListItem} from '../../model/task-list-item';
 
 @Component({
@@ -15,12 +15,10 @@ export class TaskList implements OnInit {
 
   private taskService = inject(TaskService)
 
-  private router = inject(Router)
-
   ngOnInit(): void {
     this.taskService.getAllTask().subscribe({
       next: (data) => {
-        this.taskList.set(data);
+        this.taskList.set(data.filter(task => !task.completed));
       }
     })
   }
